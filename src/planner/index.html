@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Planner</title>
+
+    <link rel="stylesheet" href="../css/planner.css">
+    <script src="../js/planner.js" type="module"></script>
+</head>
+<body>
+    <header class="divider" id="main-header"></header>
+
+<main class="planner-page">
+
+    <section class="planner-container">
+
+        <div class="planner-main">
+
+            <div class="planner-header">
+
+                <h2>Your Workout Plan</h2>
+
+                <button id="clearWorkout">
+                    Clear All
+                </button>
+
+            </div>
+
+            <div id="workoutList">
+                <!-- Dynamic exercises -->
+            </div>
+
+        </div>
+
+        <aside class="summary-panel">
+
+            <h3>Workout Summary</h3>
+
+            <div class="summary-item">
+                <span>Total Exercises</span>
+                <span id="exerciseCount">0</span>
+            </div>
+
+            <div class="summary-item">
+                <span>Total Sets</span>
+                <span id="totalSets">0</span>
+            </div>
+
+            <div class="summary-item">
+                <span>Muscle Groups</span>
+                <span id="muscleCount">0</span>
+            </div>
+
+        </aside>
+
+    </section>
+
+</main>
+<footer class="divider" id="main-footer"></footer>
+
+</body>
+</html>

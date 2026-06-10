@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Library</title>
+
+    <link rel="stylesheet" href="../css/exercises.css">
+    <script src="../js/exercises.js" type="module"></script>
+</head>
+<body>
+    <header class="divider" id="main-header"></header>
+
+    <main class="exercise-page">
+
+        <section class="page-header">
+            <h1>Exercise Library</h1>
+            <p>Discover exercises for every muscle group</p>
+        </section>
+
+        <section class="exercise-layout">
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+
+                <h3>Muscle Groups</h3>
+
+                <ul class="muscle-list">
+                    <li><button class="active">All</button></li>
+                    <li><button>Chest</button></li>
+                    <li><button>Back</button></li>
+                    <li><button>Legs</button></li>
+                    <li><button>Shoulders</button></li>
+                    <li><button>Arms</button></li>
+                    <li><button>Core</button></li>
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section class="content">
+
+                <div class="search-container">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search exercises..."
+                    >
+                </div>
+
+                <p class="results-count">
+                    Showing <span id="exerciseCount">0</span> exercises
+                </p>
+
+                <div id="exerciseGrid" class="exercise-grid">
+                    <!-- Cards inserted dynamically -->
+                </div>
+
+            </section>
+
+        </section>
+
+        <footer id="main-footer"></footer>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+@import "./header-footer.css";
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8fafc;
+    color: #111827;
+}
+
+/* =========================
+   PAGE
+========================= */
+
+.planner-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    margin-bottom: .5rem;
+}
+
+.page-header p {
+    color: #6b7280;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.planner-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+/* =========================
+   MAIN SECTION
+========================= */
+
+.planner-main {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 1.25rem;
+}
+
+.planner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.planner-header h2 {
+    font-size: 1.3rem;
+}
+
+#clearWorkout {
+    border: 1px solid #d1d5db;
+    background: white;
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#clearWorkout:hover {
+    background: #f3f4f6;
+}
+
+/* =========================
+   WORKOUT CARD
+========================= */
+
+.workout-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    background: white;
+}
+
+.drag-handle {
+    color: #9ca3af;
+    cursor: grab;
+    font-size: 1.3rem;
+}
+
+.workout-card img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.exercise-info {
+    flex: 1;
+}
+
+.exercise-info h3 {
+    margin-bottom: 1rem;
+}
+
+.inputs-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.inputs-row > div {
+    flex: 1;
+}
+
+.inputs-row label {
+    display: block;
+    font-size: .85rem;
+    margin-bottom: .3rem;
+    color: #374151;
+}
+
+.inputs-row input {
+    width: 100%;
+    padding: .8rem;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: #f9fafb;
+}
+
+/* =========================
+   MUSCLE TAG
+========================= */
+
+.muscle-tag {
+    padding: .4rem .8rem;
+
+    background: #f3f4f6;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 999px;
+
+    font-size: .8rem;
+
+    white-space: nowrap;
+}
+
+/* =========================
+   REMOVE BUTTON
+========================= */
+
+.remove-btn {
+    border: none;
+    background: transparent;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    color: #ef4444;
+}
+
+.remove-btn:hover {
+    opacity: .8;
+}
+
+/* =========================
+   SUMMARY PANEL
+========================= */
+
+.summary-panel {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    padding: 1.5rem;
+
+    height: fit-content;
+}
+
+.summary-panel h3 {
+    margin-bottom: 1.5rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 1rem;
+}
+
+.summary-item span:first-child {
+    color: #6b7280;
+}
+
+.summary-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 1.5rem 0;
+}
+
+/* =========================
+   MUSCLE GROUPS
+========================= */
+
+.muscle-groups h4 {
+    margin-bottom: 1rem;
+}
+
+.muscle-tags {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+
+.muscle-tags span {
+    padding: .4rem .8rem;
+    border-radius: 999px;
+    background: #f3f4f6;
+    font-size: .85rem;
+}
+
+/* =========================
+   INFO BOX
+========================= */
+
+.info-box {
+    margin-top: 1.5rem;
+
+    padding: 1rem;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+    min-height: 300px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    gap: 1rem;
+}
+
+.empty-state h3 {
+    font-size: 1.3rem;
+}
+
+.empty-state p {
+    color: #6b7280;
+}
+
+.empty-state a {
+    text-decoration: none;
+
+    background: #030712;
+    color: white;
+
+    padding: .8rem 1.2rem;
+
+    border-radius: 10px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .planner-container {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-panel {
+        order: -1;
+    }
+
+    .workout-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .workout-card img {
+        width: 100%;
+        height: 220px;
+    }
+
+    .inputs-row {
+        flex-direction: column;
+    }
+
+    .muscle-tag {
+        align-self: flex-start;
+    }
+}

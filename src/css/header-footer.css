@@ -1,0 +1,36 @@
+/* Header */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 1rem;
+    justify-content: flex-end;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.nav-item a:hover {
+    background-color: #e0e0e0;
+}
+
+
+hr {
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 0;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    color: #6b7280;
+    font-size: .9rem;
+}
