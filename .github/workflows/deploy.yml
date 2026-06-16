@@ -20,7 +20,7 @@ jobs:
     env:
       VITE_EXERCISES_API_URL: ${{ vars.VITE_EXERCISES_API_URL }}
       VITE_SPOONACULAR_API_KEY: ${{ vars.VITE_SPOONACULAR_API_KEY }}
-      VITE_SPOONACULAR_API_URL: ${{ vars.VITE_EXERCISES_API_URL }}
+      VITE_SPOONACULAR_API_URL: ${{ vars.VITE_SPOONACULAR_API_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
