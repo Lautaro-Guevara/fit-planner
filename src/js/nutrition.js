@@ -1,4 +1,4 @@
-import { loadHeaderFooter, createNutritionCard, descargarJsonDesdeApi, saveToFavorites } from "./utils.mjs";
+import { loadHeaderFooter, createNutritionCard, descargarJsonDesdeApi, saveToFavorites, attachFavoriteButtonListeners } from "./utils.mjs";
 
 const nutritionApiKey = import.meta.env.VITE_SPOONACULAR_API_KEY;
 const nutritionApiUrl = import.meta.env.VITE_SPOONACULAR_API_URL 
@@ -105,23 +105,7 @@ function displayRecipes(recipes) {
     }
     if (recipeContainer) {
         recipeContainer.innerHTML = recipes.map(createNutritionCard).join("");
-        attachFavoriteButtonListeners();
-    }
-}
-
-function attachFavoriteButtonListeners() {
-    if (!recipeContainer) {
-        return;
-    }
-
-    const buttons = recipeContainer.querySelectorAll(".favorite-btn");
-    buttons.forEach((button) => {
-        if (button.dataset.listenerAttached === "true") {
-            return;
-        }
-
-        button.dataset.listenerAttached = "true";
-        button.addEventListener("click", async () => {
+        attachFavoriteButtonListeners("#recipeGrid", async (button) => {
             const recipeId = button.getAttribute("info-recipe-id");
             if (!recipeId) {
                 console.warn("Missing recipe id on favorite button.");
@@ -146,7 +130,7 @@ function attachFavoriteButtonListeners() {
                 console.error("Error fetching recipe information:", error);
             }
         });
-    });
+    }
 }
 
 // Function to filter recipes by category
@@ -214,5 +198,5 @@ if (filterButtons){
     });
 }
 
-attachFavoriteButtonListeners();
+// favorite buttons are wired inside displayRecipes after render
 

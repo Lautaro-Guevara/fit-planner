@@ -1,4 +1,4 @@
-// ==============================
+﻿// ==============================
 // HEADER + FOOTER LOADER
 // ==============================
 
@@ -46,33 +46,56 @@ export async function loadHeaderFooter() {
 
 export function createExerciseCard(exercise) {
 
+  const bodyPart = exercise.bodyParts?.[0] || "Body";
+  const equipment = exercise.equipments?.[0] || "None";
+  const targetMuscle = exercise.targetMuscles?.[0] || "muscle";
+  const secondaryMuscles = (exercise.secondaryMuscles || []).join(", ");
+  const level = exercise.level || "Beginner";
+
     return `
     
     <article class="exercise-card">
 
-        <img
-            src="${exercise.gifUrl}"
-            alt="${exercise.name}"
-            class="exercise-image"
-        >
+    <div class="exercise-media">
+      <img
+        src="${exercise.gifUrl}"
+        alt="${exercise.name}"
+        class="exercise-image"
+        loading="lazy"
+      >
+
+      <button
+        type="button"
+        class="exercise-favorite-btn"
+        aria-label="Save ${exercise.name}"
+      >
+        ❤
+      </button>
+    </div>
 
         <div class="exercise-content">
 
-            <h3>${exercise.name}</h3>
+      <div class="exercise-title-row">
+        <h3>${exercise.name}</h3>
+        <span class="exercise-level">${level}</span>
+      </div>
 
-            <div class="tags">
-                <span>${exercise.bodyParts.join(", ")}</span>
-                <span>Equipment: ${exercise.equipments.join(", ")}</span>
-            </div>
+      <div class="exercise-tags">
+        <span class="exercise-tag">${bodyPart}</span>
+        <span class="exercise-tag">${equipment}</span>
+      </div>
 
-            <p>
-                Exercise targeting the
-                ${exercise.targetMuscles.join(", ")} muscle group.
-            </p>
-            <p>
-                Secundary muscles involved: ${exercise.secondaryMuscles.join(", ")}.
-            </p>
+      <p class="exercise-description">
+        A bodyweight exercise that targets the ${targetMuscle}${secondaryMuscles ? ` and engages ${secondaryMuscles}` : ""}.
+      </p>
+
+      <div class="exercise-volume">
+        <span><strong>3</strong> sets</span>
+        <span><strong>10-15</strong> reps</span>
+      </div>
+
             <button class="workout-btn">
+        <span class="plus-icon">+</span>
                 Add to Workout
             </button>
 
@@ -118,7 +141,7 @@ export function createNutritionCard(recipe) {
         aria-label="Save ${recipe.title}"
         info-recipe-id="${recipe.id}"
       >
-        ♡
+        &#9825;
       </button>
     </div>
 
@@ -131,11 +154,11 @@ export function createNutritionCard(recipe) {
 
       <div class="nutrition-meta">
         <span class="meta-item">
-          <span class="meta-icon">◷</span>
+          <span class="meta-icon">&#9687;</span>
           ${readyInMinutes} min
         </span>
         <span class="meta-item">
-          <span class="meta-icon">🔥</span>
+          <span class="meta-icon">&#128293;</span>
           ${calories} cal
         </span>
       </div>
@@ -198,7 +221,7 @@ function normalizeMealType(value = "") {
 export async function descargarJsonDesdeApi(response) {
   try {
     if (!response) {
-      throw new Error('Debes proporcionar una respuesta válida para descargar el JSON.');
+      throw new Error('Debes proporcionar una respuesta valida para descargar el JSON.');
     }
 
     // 1. Obtener los datos de la API
@@ -259,4 +282,29 @@ export function getFavoritesFromLocalStorage(key) {
     }
 
     return [];
+}
+
+
+// Function to attach event listeners to dynamically created favorite buttons.
+export function attachFavoriteButtonListeners(containerSelector, callback, buttonSelector = ".favorite-btn") {
+  if (!containerSelector || typeof callback !== "function") {
+    return;
+  }
+
+  const container = document.querySelector(containerSelector);
+  if (!container) {
+    return;
+  }
+
+  const buttons = container.querySelectorAll(buttonSelector);
+  buttons.forEach((button) => {
+    if (button.dataset.listenerAttached === "true") {
+      return;
+    }
+
+    button.dataset.listenerAttached = "true";
+    button.addEventListener("click", async () => {
+      await callback(button);
+    });
+  });
 }
