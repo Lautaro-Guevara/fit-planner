@@ -1,4 +1,4 @@
-import { loadHeaderFooter, createNutritionCard, descargarJsonDesdeApi, saveToFavorites, attachFavoriteButtonListeners } from "./utils.mjs";
+import { loadHeaderFooter, createNutritionCard, descargarJsonDesdeApi, saveToFavorites, attachButtonListeners } from "./utils.mjs";
 
 const nutritionApiKey = import.meta.env.VITE_SPOONACULAR_API_KEY;
 const nutritionApiUrl = import.meta.env.VITE_SPOONACULAR_API_URL 
@@ -105,7 +105,7 @@ function displayRecipes(recipes) {
     }
     if (recipeContainer) {
         recipeContainer.innerHTML = recipes.map(createNutritionCard).join("");
-        attachFavoriteButtonListeners("#recipeGrid", async (button) => {
+        attachButtonListeners("#recipeGrid", ".favorite-btn", async (button) => {
             const recipeId = button.getAttribute("info-recipe-id");
             if (!recipeId) {
                 console.warn("Missing recipe id on favorite button.");
@@ -136,7 +136,10 @@ function displayRecipes(recipes) {
 // Function to filter recipes by category
 async function filterRecipesByCategory(category) {
     if (category === "all") {
-        return localRecipes;
+        showRandomRecipes().then((data) => {
+            displayRecipes(data);
+        });
+        return;
     }
     
     try {
@@ -150,12 +153,40 @@ async function filterRecipesByCategory(category) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log("Response from category filter fetch:", data);
         console.log("Fetched recipes:", data.results);
         return data.results || [];
     } catch (error) {
         console.error("Error filtering recipes by category:", error);
         return [];
     }
+}
+
+// function to show random recipes on page load
+export async function showRandomRecipes(number = 12) {
+    try {
+        const response = await fetch(`${nutritionApiUrl}/recipes/random?number=${number}&includeNutrition=true`, {
+            headers: {
+                "X-Api-Key": nutritionApiKey
+            }
+        }); 
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Response from random recipes fetch:", data);
+        console.log("Fetched random recipes:", data.recipes);
+        return data.recipes || [];
+    } catch (error) {
+        console.error("Error fetching random recipes:", error);
+        return [];
+    }
+}
+
+async function initNutritionPage() {
+    const data = await showRandomRecipes();
+    localRecipes = data || [];
+    displayRecipes(localRecipes);
 }
 
 
@@ -198,5 +229,6 @@ if (filterButtons){
     });
 }
 
-// favorite buttons are wired inside displayRecipes after render
 
+
+initNutritionPage();

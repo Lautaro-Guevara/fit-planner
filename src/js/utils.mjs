@@ -66,8 +66,10 @@ export function createExerciseCard(exercise) {
 
       <button
         type="button"
-        class="exercise-favorite-btn"
+        class="favorite-btn"
+        is-favorite="false"
         aria-label="Save ${exercise.name}"
+        info-exercise-id="${exercise.exerciseId}"
       >
         ❤
       </button>
@@ -94,7 +96,7 @@ export function createExerciseCard(exercise) {
         <span><strong>10-15</strong> reps</span>
       </div>
 
-            <button class="workout-btn">
+            <button class="add-to-workout-btn" type="button" aria-label="Add ${exercise.name} to workout plan" info-exercise-id="${exercise.exerciseId}">
         <span class="plus-icon">+</span>
                 Add to Workout
             </button>
@@ -255,6 +257,7 @@ export async function descargarJsonDesdeApi(response) {
 // and render them in the favorites page
 //*************************************
 
+
 export function saveToFavorites(key, item) {
     if (!key || !item) {
         console.warn("Both key and item are required to save to favorites.");
@@ -285,20 +288,22 @@ export function getFavoritesFromLocalStorage(key) {
 }
 
 
-// Function to attach event listeners to dynamically created favorite buttons.
-export function attachFavoriteButtonListeners(containerSelector, callback, buttonSelector = ".favorite-btn") {
+// Function to attach event listeners to dynamically created buttons.
+export function attachButtonListeners(containerSelector, buttonSelector, callback) {
   if (!containerSelector || typeof callback !== "function") {
     return;
   }
 
   const container = document.querySelector(containerSelector);
   if (!container) {
+    console.warn(`Container not found for selector: ${containerSelector}`);
     return;
   }
 
   const buttons = container.querySelectorAll(buttonSelector);
   buttons.forEach((button) => {
     if (button.dataset.listenerAttached === "true") {
+      console.warn("Listener already attached to button:", button);
       return;
     }
 
@@ -307,4 +312,60 @@ export function attachFavoriteButtonListeners(containerSelector, callback, butto
       await callback(button);
     });
   });
+}
+
+// Function to change the state of the favorite button when clicked, and save/remove from favorites accordingly
+export function handleFavoriteButtonClick(button, itemId, favoritesKey, data, idParamName = "id") {
+    if (!button || !itemId || !favoritesKey || !data) {
+        console.warn("All parameters are required for handling favorite button click.");
+        return;
+    }
+    
+    console.log("Handling favorite button click for itemId:", itemId, "with data:", data);
+    const isFavorite = button.classList.contains("is-favorite");
+    if (isFavorite) {
+      // Remove from favorites
+      const favorites = getFavoritesFromLocalStorage(favoritesKey);
+      const updatedFavorites = favorites.filter(item => item.data && item.data[idParamName] !== itemId);
+      localStorage.setItem(favoritesKey, JSON.stringify(updatedFavorites));
+      button.classList.remove("is-favorite");
+    } else {
+      // Add to favorites
+      const favorites = getFavoritesFromLocalStorage(favoritesKey);
+      favorites.push(data);
+      localStorage.setItem(favoritesKey, JSON.stringify(favorites));
+      button.classList.add("is-favorite");
+    }
+}
+
+// Function to check if the card is already in favorites and update the button state accordingly
+export function updateFavoriteButtonState(button, itemId, favoritesKey, idParamName = "id") {
+    if (!button || !itemId || !favoritesKey) {
+        console.warn("Button, itemId, and favoritesKey are required to update favorite button state.");
+        return;
+    }
+    console.log("Updating favorite button state for itemId:", itemId);
+    const favorites = getFavoritesFromLocalStorage(favoritesKey);
+    console.log("Current favorites for key", favoritesKey, ":", favorites);
+    if (favorites.some(fav => fav.data && fav.data[idParamName] === itemId)) {
+      console.log("ITEM IS IN FAVORITES, marking button as active.");
+        button.classList.add("is-favorite");
+    } else {
+        button.classList.remove("is-favorite");
+    }
+}
+
+//*************************************
+//  WORKOUT PLANNER FUNCTIONS
+//*************************************
+
+// Save exercises to workout plan in localStorage
+export function saveExerciseToWorkoutPlan(exercise) {
+    if (!exercise) {
+        console.warn("No exercise provided to save to workout plan.");
+        return;
+    }
+    const workoutPlan = JSON.parse(localStorage.getItem("workoutPlan")) || [];
+    workoutPlan.push(exercise);
+    localStorage.setItem("workoutPlan", JSON.stringify(workoutPlan));
 }

@@ -88,7 +88,7 @@ body {
    WORKOUT CARD
 ========================= */
 
-.workout-card {
+.workout-plan-card {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -108,7 +108,7 @@ body {
     font-size: 1.3rem;
 }
 
-.workout-card img {
+.workout-plan-card img {
     width: 90px;
     height: 90px;
     object-fit: cover;
@@ -123,23 +123,23 @@ body {
     margin-bottom: 1rem;
 }
 
-.inputs-row {
+.workout-plan-inputs {
     display: flex;
     gap: 1rem;
 }
 
-.inputs-row > div {
+.workout-plan-inputs > div {
     flex: 1;
 }
 
-.inputs-row label {
+.workout-plan-inputs label {
     display: block;
     font-size: .85rem;
     margin-bottom: .3rem;
     color: #374151;
 }
 
-.inputs-row input {
+.workout-plan-inputs input {
     width: 100%;
     padding: .8rem;
 
@@ -153,7 +153,7 @@ body {
    MUSCLE TAG
 ========================= */
 
-.muscle-tag {
+.workout-plan-muscle {
     padding: .4rem .8rem;
 
     background: #f3f4f6;
@@ -171,7 +171,8 @@ body {
    REMOVE BUTTON
 ========================= */
 
-.remove-btn {
+.remove-btn,
+.remove-workout-btn {
     border: none;
     background: transparent;
 
@@ -182,7 +183,8 @@ body {
     color: #ef4444;
 }
 
-.remove-btn:hover {
+.remove-btn:hover,
+.remove-workout-btn:hover {
     opacity: .8;
 }
 
@@ -261,7 +263,7 @@ body {
 }
 
 /* =========================
-   EMPTY STATE
+    EMPTY STATE
 ========================= */
 
 .empty-state {
@@ -311,21 +313,21 @@ body {
         order: -1;
     }
 
-    .workout-card {
+    .workout-plan-card {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .workout-card img {
+    .workout-plan-card img {
         width: 100%;
         height: 220px;
     }
 
-    .inputs-row {
+    .workout-plan-inputs {
         flex-direction: column;
     }
 
-    .muscle-tag {
+    .workout-plan-muscle {
         align-self: flex-start;
     }
 }

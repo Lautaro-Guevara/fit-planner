@@ -21,6 +21,10 @@ const RECIPE_KEYS = [
 	"favoritesRecipes"
 ];
 
+//*************************************
+//  FUNCTIONS
+//*************************************
+
 function readFavoritesWithKey(keys) {
 	for (const key of keys) {
 		const rawValue = localStorage.getItem(key);
@@ -76,11 +80,11 @@ function getRecipeInfo(item) {
 }
 
 function getExerciseInfo(item) {
-	const image = item.gifUrl || "";
-	const title = item.name || "Exercise";
-	const bodyPart = Array.isArray(item.bodyParts) ? item.bodyParts.join(", ") : "Workout";
-	const equipment = Array.isArray(item.equipments) ? item.equipments.join(", ") : "Bodyweight";
-	const muscle = Array.isArray(item.targetMuscles) ? item.targetMuscles.join(", ") : "Fitness";
+	const image = item.data.gifUrl || "";
+	const title = item.data.name || "Exercise";
+	const bodyPart = Array.isArray(item.data.bodyParts) ? item.data.bodyParts.join(", ") : "Workout";
+	const equipment = Array.isArray(item.data.equipments) ? item.data.equipments.join(", ") : "Bodyweight";
+	const muscle = Array.isArray(item.data.targetMuscles) ? item.data.targetMuscles.join(", ") : "Fitness";
 
 	return {
 		image,

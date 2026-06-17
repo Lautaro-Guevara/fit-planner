@@ -31,7 +31,7 @@
 	object-fit: cover;
 }
 
-.exercise-favorite-btn {
+.favorite-btn {
 	position: absolute;
 	top: 12px;
 	right: 12px;
@@ -46,9 +46,10 @@
 	cursor: pointer;
 	display: grid;
 	place-items: center;
+	transition: background 0.2s, color 0.2s;
 }
 
-.exercise-favorite-btn.is-favorite {
+.favorite-btn.is-favorite {
 	color: #e11d48;
 }
 
@@ -124,7 +125,7 @@
 	font-weight: 500;
 }
 
-.workout-btn {
+.add-to-workout-btn {
 	margin-top: auto;
 	width: 100%;
 	border: none;
@@ -141,12 +142,12 @@
 	font-weight: 500;
 }
 
-.workout-btn .plus-icon {
+.add-to-workout-btn .plus-icon {
 	font-size: 1.35rem;
 	line-height: 1;
 }
 
-.workout-btn:hover {
+.add-to-workout-btn:hover {
 	background: var(--exercise-button-hover);
 }
 
