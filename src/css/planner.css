@@ -187,19 +187,31 @@ body {
 
 .remove-btn,
 .remove-workout-btn {
+    top: .65rem;
+    right: .65rem;
+    width: 1.65rem;
+    height: 1.65rem;
     border: none;
     background: transparent;
-
+    border-radius: 50%;
+    background: #ffffff;
+    color: #334155;
+    font-size: .78rem;
+    line-height: 1;
+    font-weight: 700;
     font-size: 1.2rem;
-
+    border: 1px solid #d1d5db;
     cursor: pointer;
 
     color: #df0202;
+    transition: opacity 0.2s;
 }
 
 .remove-btn:hover,
 .remove-workout-btn:hover {
-    opacity: .8;
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #b91c1c;
 }
 
 /* =========================

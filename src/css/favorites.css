@@ -248,3 +248,14 @@ body {
         font-size: .85rem;
     }
 }
+
+
+/* Transition for cards when hovering over them - Making them slightly lift up and add a subtle shadow */
+.favorite-item {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.favorite-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

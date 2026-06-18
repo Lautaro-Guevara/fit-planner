@@ -19,3 +19,9 @@
 .favorite-btn.is-favorite {
 	color: #e11d48;
 }
+
+/* Transition when hovering over the button, but only if it's not already a favorite */
+.favorite-btn:not(.is-favorite):hover {
+	background: #f87171;
+	color: #ffffff;
+}
