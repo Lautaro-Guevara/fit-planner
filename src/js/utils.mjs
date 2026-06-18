@@ -143,7 +143,7 @@ export function createNutritionCard(recipe) {
         aria-label="Save ${recipe.title}"
         info-recipe-id="${recipe.id}"
       >
-        &#9825;
+        ❤
       </button>
     </div>
 
@@ -156,7 +156,7 @@ export function createNutritionCard(recipe) {
 
       <div class="nutrition-meta">
         <span class="meta-item">
-          <span class="meta-icon">&#9687;</span>
+          <span class="meta-icon">&#9200;</span>
           ${readyInMinutes} min
         </span>
         <span class="meta-item">
@@ -347,11 +347,23 @@ export function updateFavoriteButtonState(button, itemId, favoritesKey, idParamN
     console.log("Updating favorite button state for itemId:", itemId);
     const favorites = getFavoritesFromLocalStorage(favoritesKey);
     console.log("Current favorites for key", favoritesKey, ":", favorites);
-    if (favorites.some(fav => fav.data && fav.data[idParamName] === itemId)) {
+
+    if (favoritesKey === "favoriteExercises") {
+      if (favorites.some(fav => fav.data && fav.data[idParamName] === itemId)) {
       console.log("ITEM IS IN FAVORITES, marking button as active.");
         button.classList.add("is-favorite");
-    } else {
+      } else {
         button.classList.remove("is-favorite");
+      }
+      
+    } else if (favoritesKey === "favoriteRecipes") {
+      if (favorites.some(fav => fav && fav[idParamName] === itemId)) {
+      console.log("ITEM IS IN FAVORITES, marking button as active.");
+        button.classList.add("is-favorite");
+      } else {
+        button.classList.remove("is-favorite");
+      }
+        console.log("Checking if recipe is in favorites with id:", itemId);
     }
 }
 

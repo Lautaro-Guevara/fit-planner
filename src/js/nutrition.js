@@ -1,4 +1,4 @@
-import { loadHeaderFooter, createNutritionCard, descargarJsonDesdeApi, saveToFavorites, attachButtonListeners } from "./utils.mjs";
+import { loadHeaderFooter, createNutritionCard, descargarJsonDesdeApi, saveToFavorites, attachButtonListeners, updateFavoriteButtonState, handleFavoriteButtonClick } from "./utils.mjs";
 
 const nutritionApiKey = import.meta.env.VITE_SPOONACULAR_API_KEY;
 const nutritionApiUrl = import.meta.env.VITE_SPOONACULAR_API_URL 
@@ -44,7 +44,7 @@ loadHeaderFooter()
 // Function to search for recipes based on a query
 async function searchRecipes(query) {
     try {
-        const response = await fetch(`${nutritionApiUrl}/recipes/complexSearch?query=${query}&addRecipeInformation=true&addRecipeNutrition=true`, {
+        const response = await fetch(`${nutritionApiUrl}/recipes/complexSearch?query=${query}&addRecipeInformation=true&addRecipeNutrition=true&number=5`, {
             headers: {
                 "X-Api-Key": nutritionApiKey
             }
@@ -105,6 +105,17 @@ function displayRecipes(recipes) {
     }
     if (recipeContainer) {
         recipeContainer.innerHTML = recipes.map(createNutritionCard).join("");
+
+        // After rendering, update the state of the favorite buttons for each recipe
+        recipes.forEach(recipe => {
+            // Find the corresponding favorite button for this recipe using its ID
+            const favoriteButton = recipeContainer.querySelector(`.favorite-btn[info-recipe-id="${recipe.id}"]`);
+            console.log(favoriteButton, recipe.id);
+            if (favoriteButton) {
+                console.log("Updating favorite button state for recipe id:", recipe.id);
+                updateFavoriteButtonState(favoriteButton, recipe.id, "favoriteRecipes", "id");
+            }
+        });
         attachButtonListeners("#recipeGrid", ".favorite-btn", async (button) => {
             const recipeId = button.getAttribute("info-recipe-id");
             if (!recipeId) {
@@ -125,7 +136,7 @@ function displayRecipes(recipes) {
                 console.log("Response from recipe information fetch:", response);
                 const data = await response.json();
                 console.log("Data from recipe information fetch:", data);
-                saveToFavorites("favoriteRecipes", data);
+                handleFavoriteButtonClick(button, recipeId, "favoriteRecipes", data, "id");
             } catch (error) {
                 console.error("Error fetching recipe information:", error);
             }
@@ -143,7 +154,7 @@ async function filterRecipesByCategory(category) {
     }
     
     try {
-        const response = await fetch(`${nutritionApiUrl}/recipes/complexSearch?type=${category}&addRecipeNutrition=true`, {
+        const response = await fetch(`${nutritionApiUrl}/recipes/complexSearch?type=${category}&addRecipeNutrition=true&number=5`, {
             headers: {
                 "X-Api-Key": nutritionApiKey
             }
@@ -174,8 +185,7 @@ export async function showRandomRecipes(number = 12) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Response from random recipes fetch:", data);
-        console.log("Fetched random recipes:", data.recipes);
+        
         return data.recipes || [];
     } catch (error) {
         console.error("Error fetching random recipes:", error);
@@ -184,7 +194,7 @@ export async function showRandomRecipes(number = 12) {
 }
 
 async function initNutritionPage() {
-    const data = await showRandomRecipes();
+    const data = await showRandomRecipes(5);
     localRecipes = data || [];
     displayRecipes(localRecipes);
 }

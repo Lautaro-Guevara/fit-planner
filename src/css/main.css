@@ -1,5 +1,6 @@
 @import "./header-footer.css";
 @import "./exercisesCard.css";
+@import "./recipeCard.css";
 
 body {
     font-family: Arial, Helvetica, sans-serif;

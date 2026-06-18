@@ -123,6 +123,18 @@ body {
     margin-bottom: 1rem;
 }
 
+.workout-plan-info-box {
+    margin: 0 0 1rem;
+    padding: .8rem 1rem;
+}
+
+.workout-plan-bodypart,
+.workout-plan-equipment {
+    font-size: .9rem;
+    color: #4b5563;
+    margin-bottom: .35rem;
+}
+
 .workout-plan-inputs {
     display: flex;
     gap: 1rem;
@@ -154,6 +166,8 @@ body {
 ========================= */
 
 .workout-plan-muscle {
+    display: inline-flex;
+    align-items: center;
     padding: .4rem .8rem;
 
     background: #f3f4f6;
@@ -164,7 +178,7 @@ body {
 
     font-size: .8rem;
 
-    white-space: nowrap;
+    white-space: normal;
 }
 
 /* =========================
@@ -180,7 +194,7 @@ body {
 
     cursor: pointer;
 
-    color: #ef4444;
+    color: #df0202;
 }
 
 .remove-btn:hover,
@@ -226,7 +240,7 @@ body {
 }
 
 /* =========================
-   MUSCLE GROUPS
+    LEGACY / OPTIONAL TAGS
 ========================= */
 
 .muscle-groups h4 {
@@ -258,7 +272,7 @@ body {
     border: 1px solid #e5e7eb;
     border-radius: 12px;
 
-    color: #6b7280;
+    color: #16153d;
     line-height: 1.5;
 }
 

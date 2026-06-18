@@ -1,5 +1,6 @@
-import { loadHeaderFooter, createExerciseCard, createNutritionCard } from "./utils.mjs";
+import { loadHeaderFooter, createExerciseCard, createNutritionCard, attachButtonListeners, handleFavoriteButtonClick, updateFavoriteButtonState } from "./utils.mjs";
 import { showRandomRecipes } from "./nutrition.js";
+
 
 //*************************************
 //  CONST AND VARIABLES
@@ -32,6 +33,60 @@ async function fetchFeaturedExercises() {
     const exercises = await response.json();
     if (featuredExercisesContainer) {
       featuredExercisesContainer.innerHTML = exercises.data.map(createExerciseCard).join("");
+      exercises.data.forEach(exercise => {
+        const favoriteButton = featuredExercisesContainer.querySelector(`.favorite-btn[info-exercise-id="${exercise.exerciseId}"]`);
+        console.log(favoriteButton, exercise.exerciseId);
+        if (favoriteButton) {
+          console.log("Updating favorite button state for exercise id:", exercise.exerciseId);
+          updateFavoriteButtonState(favoriteButton, exercise.exerciseId, "favoriteExercises", "exerciseId");
+        }
+      });
+      attachButtonListeners("#featuredExercises", ".favorite-btn", async (button) => {
+        console.log("Favorite button clicked for exercise id:", button.getAttribute("info-exercise-id"));
+        const exerciseId = button.getAttribute("info-exercise-id");
+        if (!exerciseId) {
+          console.warn("Missing exercise id on favorite button.");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${exercisesUrl}/exercises/${exerciseId}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          console.log("Response from exercise information fetch:", response);
+
+          const data = await response.json();
+          console.log("Data from exercise information fetch:", data);
+          handleFavoriteButtonClick(button, exerciseId, "favoriteExercises", data, "exerciseId");
+
+        } catch (error) {
+          console.error("Error fetching exercise information:", error);
+        }
+      });
+
+      attachButtonListeners("#featuredExercises", ".add-to-workout-btn", async (button) => {
+        console.log("Add to workout plan button clicked for exercise id:", button.getAttribute("info-exercise-id"));
+        const exerciseId = button.getAttribute("info-exercise-id");
+        if (!exerciseId) {
+          console.warn("Missing exercise id on add to workout plan button.");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${exercisesUrl}/exercises/${exerciseId}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          console.log("Response from exercise information fetch:", response);
+
+          const data = await response.json();
+          console.log("Data from exercise information fetch:", data);
+          saveExerciseToWorkoutPlan(data);
+        } catch (error) {
+          console.error("Error fetching exercise information:", error);
+        }
+      }, ".add-to-workout-btn");
     }
   } catch (error) {
     console.error("Error fetching featured exercises:", error);

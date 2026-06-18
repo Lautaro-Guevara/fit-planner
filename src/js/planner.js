@@ -116,9 +116,11 @@ function createWorkoutPlanCard(exercise) {
             <img src="${exercise.data.gifUrl}" alt="${exercise.data.name}" class="workout-plan-image">
             <div class="exercise-info">
                 <h3 class="workout-plan-title">${exercise.data.name}</h3>
-                <p class="workout-plan-bodypart">Body Part: ${bodyPart}</p>
-                <p class="workout-plan-equipment">Equipment: ${equipment}</p>
-                <p class="workout-plan-muscle">Target Muscle: ${targetMuscles}</p>
+                <div class="info-box workout-plan-info-box">
+                    <p class="workout-plan-bodypart">Body Part: ${bodyPart}</p>
+                    <p class="workout-plan-equipment">Equipment: ${equipment}</p>
+                    <p class="workout-plan-muscle">Target Muscle: ${targetMuscles}</p>
+                </div>
                 <div class="workout-plan-inputs">
                     <div>
                         <label for="sets-${exercise.data.exerciseId}">Sets:</label>

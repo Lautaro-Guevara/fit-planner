@@ -18,7 +18,7 @@ loadHeaderFooter();
 //*************************************
 
 // Function to display exercises in the UI
-function displayExercises(exercises) {
+export function displayExercises(exercises) {
     if (exercisesContainer) {
         exercisesContainer.innerHTML = exercises.map(createExerciseCard).join("");
         exercises.forEach(exercise => {
